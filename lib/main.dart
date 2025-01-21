@@ -120,8 +120,8 @@ class TeamsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Map<String, String>> teams = [
       {'name': 'FC Barcelone', 'image': 'assets/images/barcelona.png'},
-      {'name': 'Real Madrid', 'image': 'assets/images/real_madrid.png'},
-      {'name': 'Bayern Munich', 'image': 'assets/images/bayern.png'},
+      {'name': 'Real Madrid', 'image': 'assets/images/real_madrid.webp'},
+      {'name': 'Bayern Munich', 'image': 'assets/images/bayern.webp'},
     ];
     return _buildListScreen(context, 'Équipes Légendaires', teams);
   }
