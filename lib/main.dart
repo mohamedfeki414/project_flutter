@@ -12,7 +12,7 @@ class FootballLegendsApp extends StatelessWidget {
     return MaterialApp(
       title: 'Football Legends',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
       ),
       initialRoute: '/',
       routes: {
@@ -74,26 +74,40 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/players');
-              },
-              child: const Text('Top 3 des joueurs'),
+            _buildMenuButton(
+              context,
+              'Top 3 des joueurs',
+              'assets/images/players.png',
+              '/players',
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/teams');
-              },
-              child: const Text('Équipes légendaires'),
+            _buildMenuButton(
+              context,
+              'Équipes légendaires',
+              'assets/images/teams.png',
+              '/teams',
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/leagues');
-              },
-              child: const Text('Top 5 des ligues'),
+            _buildMenuButton(
+              context,
+              'Top 5 des ligues',
+              'assets/images/leagues.png',
+              '/leagues',
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildMenuButton(
+      BuildContext context, String title, String image, String route) {
+    return Card(
+      margin: const EdgeInsets.all(12),
+      child: ListTile(
+        leading: Image.asset(image, width: 50, height: 50),
+        title: Text(title),
+        onTap: () {
+          Navigator.pushNamed(context, route);
+        },
       ),
     );
   }
@@ -104,18 +118,12 @@ class TeamsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> teams = ['FC Barcelone', 'Real Madrid', 'Bayern Munich'];
-    return Scaffold(
-      appBar: AppBar(title: const Text('Équipes Légendaires')),
-      body: ListView.builder(
-        itemCount: teams.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(teams[index]),
-          );
-        },
-      ),
-    );
+    final List<Map<String, String>> teams = [
+      {'name': 'FC Barcelone', 'image': 'assets/images/barcelona.png'},
+      {'name': 'Real Madrid', 'image': 'assets/images/real_madrid.png'},
+      {'name': 'Bayern Munich', 'image': 'assets/images/bayern.png'},
+    ];
+    return _buildListScreen(context, 'Équipes Légendaires', teams);
   }
 }
 
@@ -124,18 +132,12 @@ class PlayersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> players = ['Lionel Messi', 'Diego Maradona', 'Pelé'];
-    return Scaffold(
-      appBar: AppBar(title: const Text('Top 3 Joueurs')),
-      body: ListView.builder(
-        itemCount: players.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(players[index]),
-          );
-        },
-      ),
-    );
+    final List<Map<String, String>> players = [
+      {'name': 'Lionel Messi', 'image': 'assets/images/messi.png'},
+      {'name': 'Diego Maradona', 'image': 'assets/images/maradona.png'},
+      {'name': 'Pelé', 'image': 'assets/images/pele.png'},
+    ];
+    return _buildListScreen(context, 'Top 3 Joueurs', players);
   }
 }
 
@@ -144,17 +146,30 @@ class LeaguesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> leagues = ['Premier League', 'Serie A', 'La Liga'];
-    return Scaffold(
-      appBar: AppBar(title: const Text('Top 5 Ligues')),
-      body: ListView.builder(
-        itemCount: leagues.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(leagues[index]),
-          );
-        },
-      ),
-    );
+    final List<Map<String, String>> leagues = [
+      {'name': 'Premier League', 'image': 'assets/images/premier_league.png'},
+      {'name': 'Serie A', 'image': 'assets/images/serie_a.png'},
+      {'name': 'La Liga', 'image': 'assets/images/la_liga.png'},
+    ];
+    return _buildListScreen(context, 'Top 5 Ligues', leagues);
   }
+}
+
+Widget _buildListScreen(
+    BuildContext context, String title, List<Map<String, String>> items) {
+  return Scaffold(
+    appBar: AppBar(title: Text(title)),
+    body: ListView.builder(
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return Card(
+          margin: const EdgeInsets.all(10),
+          child: ListTile(
+            leading: Image.asset(items[index]['image']!, width: 50, height: 50),
+            title: Text(items[index]['name']!),
+          ),
+        );
+      },
+    ),
+  );
 }
